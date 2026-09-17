@@ -37,12 +37,44 @@ func (todos *Todos) validateindex(index int) error{
 }
 // delete task from todo
 func(todos *Todos) del(index int)error{
-  if err:=todos.validateindex(index);err!=nil{
+  t := *todos
+  if err:=t.validateindex(index);err!=nil{
     return err
   }
-  *todos = append((*todos)[:index],(*todos)[index + 1 :]...)
+  t = append(t[:index],t[index + 1 :]...)
   return nil
 }
+//edit title with index
+func (todos *Todos) ed(index int,title string)error{
+  t := *todos
+  if err:=t.validateindex(index);err!=nil{
+    return err
+  }
+  t[index].Title=title
+  return nil
+  }
+//func for toggle(trye/false) by index number
+func (todos *Todos) tog(index int) error{
+  t := *todos
+  if err:=t.validateindex(index);err!=nil{
+    return err
+  }
+  check := t[index].completed
+  if check == false{
+    t[index].completed = true
+    //completed time logic
+    com := time.Now() 
+    t[index].completedat = &com
+  }else {
+    t[index].completed = false
+    t[index].completedat = nil
+}
+  
+  return nil
+}
+
+//checker 
 func main(){
   fmt.Println("done")
 }
+
