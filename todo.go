@@ -4,6 +4,9 @@ import (
   "fmt"
   "time"
   "errors"
+  "os"
+  "github.com/aquasecurity/table"
+  "strconv"
 )
 type Todo struct{
   Title string
@@ -73,8 +76,33 @@ func (todos *Todos) tog(index int) error{
   return nil
 }
 
-//checker 
+//checker
+
+// func for printing all todos in cli
+
+func (todos *Todos) print(){
+  t:= *todos
+  table := table.New(os.Stdout)
+  table.SetHeaders("#","Title","Completed","Createdat","Completedat")
+  table.SetRowLines(false)
+  for index,value := range t {
+    completed := ""
+    completedat := ""
+    if value.completed == true {
+      completed = "☆"
+      if value.completedat != nil {
+        completedat = value.completedat.Format(time.RFC1123)
+      }
+    }
+    table.AddRow(strconv.Itoa(index),value.Title,completed,value.createdat.Format(time.RFC1123),completedat)
+ }
+table.Render()
+}
+
+//checker
+/*
 func main(){
   fmt.Println("done")
 }
 
+*/

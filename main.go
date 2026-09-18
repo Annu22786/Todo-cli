@@ -1,9 +1,17 @@
 package main
 
-import "fmt"
+
 
 func main(){
-  fmt.Println("anas")
+  t := Todos{}
 
+t.add ("Buy milk")
+
+t.add ("Buy bread")
+
+t.tog(0)
+
+t.print()
+  //todo.delete={"bread"}
   
 }
