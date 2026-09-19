@@ -2,8 +2,8 @@ package main
 
 import(
   "fmt"
-//  "encoding/json"
- // "os"
+  "encoding/json"
+  "os"
 )
 type Storage[T any] struct {
   Filename string
@@ -15,6 +15,13 @@ func declarename[T any](filename string) *Storage[T]{
     Filename : filename}
 }
 // save func
+func (s *Storage[T]) save(data T)error{
+  funcdata,err:=json.MarshalIndent(data," ","")
+  if err != nil{
+    return nil
+  }
+  return os.WriteFile((*s).Filename,funcdata,0644)
+}
 
 //checker file
 func main(){
